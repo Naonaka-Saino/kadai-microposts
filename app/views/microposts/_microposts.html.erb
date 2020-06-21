@@ -25,8 +25,26 @@
 
             
 <%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+<%#いいね機能%>
+<% else %>
 
-          
+<%#ここにいいねボタンをrender%>
+<%#= render 'favorites/favorite_button' %>
+<% unless current_user == micropost.user %>
+
+  
+<% if micropost.favorited_by?(current_user) %>
+
+<p><span>Unfavorite?</span><%= link_to micropost.favorites.count, micropost_favorites_path(micropost.id), method: :delete %></p>
+  
+<% else %>
+
+<p><span>Favorite?</span><%= link_to micropost.favorites.count, micropost_favorites_path(micropost.id), method: :post %></p>
+  
+<% end %>
+
+<% end %>
+
 <% end %>
 
         </div>
@@ -35,7 +53,6 @@
   
 <% end %>
 
-  
 <%= paginate microposts %>
 
 </ul>
